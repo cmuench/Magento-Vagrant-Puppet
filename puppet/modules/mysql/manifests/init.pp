@@ -5,7 +5,7 @@ class mysql( $root_password ) {
   exec { "Set MySQL server root password":
     subscribe => [ Package["mysql-server"], Package["mysql-client"] ],
     refreshonly => true,
-    unless => "mysqladmin -uroot -p{$root_password} status",
+    unless => "mysqladmin -uroot -p${root_password} status",
     path => "/bin:/usr/bin",
     command => "mysqladmin -uroot password ${root_password}",
   }
