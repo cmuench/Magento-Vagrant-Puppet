@@ -66,4 +66,10 @@ class magento( $db_username, $db_password, $version, $admin_username, $admin_pas
     require => [Exec["setting-permissions"], Exec["create-magentodb-db"]],
   }
 
+  exec { "register-magento-channel":
+    cwd     => "${apache2::document_root}/magento",
+    onlyif  => "/usr/bin/test `${apache2::document_root}/magento/mage list-channels | wc -l` -lt 2",
+    command => "${apache2::document_root}/magento/mage mage-setup",
+    require => [Exec["install-magento"]]
+  }
 }
