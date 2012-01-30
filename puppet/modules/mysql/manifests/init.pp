@@ -17,7 +17,7 @@ class mysql( $root_password ) {
     }
 
     exec { "Create vagrant user":
-      unless => "/usr/bin/mysql -uvagrant -pvagrant status",
+      unless => "/usr/bin/mysqladmin -uvagrant -pvagrant status",
       command => "/usr/bin/mysql -uroot -p${root_password} -e \"CREATE USER vagrant@'%' IDENTIFIED BY 'vagrant'; Grant all on *.* TO vagrant@'%';\"",
       require => Service["mysql"],
     }
